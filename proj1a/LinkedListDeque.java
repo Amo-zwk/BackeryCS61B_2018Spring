@@ -127,21 +127,21 @@ public class LinkedListDeque<T> {
     }
 
     //递归的辅助函数
-    public T getRecursionHelper(IntNode intNode, int index) {
+    public T getRecursiveHelper(IntNode intNode, int index) {
         if (index == 0) {
             return intNode.item;
         } else {
-            return getRecursionHelper(intNode.next, index - 1);
+            return getRecursiveHelper(intNode.next, index - 1);
         }
     }
 
     //递归获取元素,递归的辅助函数，用helper来写
-    public T getRecursion(int index) {
+    public T getRecursive(int index) {
         if (index > size()) {
             return null;
         }
         IntNode intNode = first.next;
-        return getRecursionHelper(intNode, index);
+        return getRecursiveHelper(intNode, index);
     }
 
 }
