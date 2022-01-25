@@ -47,17 +47,6 @@ public class LinkedListDeque<T> {
      * 本类要求写一个用双链表而且是循环的模拟双端队列
      */
 
-    //输出双端队列
-    public void printDeque() {
-        IntNode intNode = first.next;
-        while (intNode != last) {
-            System.out.println(intNode.item);
-            System.out.println(" ");
-            intNode = intNode.next;
-        }
-        System.out.println('\n');
-    }
-
     //判断大小
     public int size() {
         return size;
@@ -84,7 +73,7 @@ public class LinkedListDeque<T> {
     public void addLast(T item) {
         IntNode intNode = new IntNode(item, last.pre, last);
         last.pre = intNode;
-        last.pre.next = intNode;
+        intNode.pre.next = intNode;
         size++;
     }
 
@@ -143,5 +132,17 @@ public class LinkedListDeque<T> {
         IntNode intNode = first.next;
         return getRecursiveHelper(intNode, index);
     }
+
+    //输出双端队列
+    public void printDeque() {
+        IntNode intNode = first.next;
+        while (intNode != last) {
+            System.out.println(intNode.item);
+            System.out.println(" ");
+            intNode = intNode.next;
+        }
+        System.out.println('\n');
+    }
+
 }
 
