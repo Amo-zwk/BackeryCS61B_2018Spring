@@ -4,9 +4,9 @@ public class LinkedListDeque<T> {
      * 创建一个节点类对象
      */
     public class IntNode {
-        public T item;
-        public IntNode pre;
-        public IntNode next;
+        private T item;
+        private IntNode pre;
+        private IntNode next;
 
         public IntNode(T item, IntNode pre, IntNode next) {
             this.item = item;
@@ -93,7 +93,7 @@ public class LinkedListDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T number = (T) first.next.item;
+        T number = first.next.item;
         first.next = first.next.next;
         first.next.pre = first;
         size--;
