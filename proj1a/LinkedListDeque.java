@@ -3,10 +3,10 @@ public class LinkedListDeque<T> {
     /**
      * 创建一个节点类对象
      */
-    public class IntNode<T> {
+    public class IntNode {
         public T item;
-        public IntNode<T> pre;
-        public IntNode<T> next;
+        public IntNode pre;
+        public IntNode next;
 
         public IntNode(T item, IntNode pre, IntNode next) {
             this.item = item;
@@ -105,7 +105,7 @@ public class LinkedListDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T number = (T)last.pre.item;
+        T number = last.pre.item;
         last.pre = last.pre.pre;
         last.pre.next = last;
         size--;
@@ -123,15 +123,15 @@ public class LinkedListDeque<T> {
             intNode = intNode.next;
             i++;
         }
-        return (T) intNode.item;
+        return intNode.item;
     }
 
     //递归的辅助函数
     public T getRecursionHelper(IntNode intNode, int index) {
         if (index == 0) {
-            return (T) intNode.item;
+            return intNode.item;
         } else {
-            return (T) getRecursionHelper(intNode.next, index - 1);
+            return getRecursionHelper(intNode.next, index - 1);
         }
     }
 
