@@ -1,147 +1,113 @@
 public class LinkedListDeque<T> {
+    private class Node<T> {
+        private T item;
+        private Node<T> prev;
+        private Node<T> next;
 
-    /**
-     * 创建一个节点类对象
-     */
-    public class IntNode {
-        public T item;
-        public IntNode pre;
-        public IntNode next;
-
-        public IntNode(T item, IntNode pre, IntNode next) {
+        public Node(T item, Node prev, Node next) {
             this.item = item;
-            this.pre = pre;
+            this.prev = prev;
             this.next = next;
         }
-    }
 
-    //管理模式用带size和first和last指针的
-    private IntNode first; //头指针
-    private IntNode last; //尾指针
-    private int size; //因为后面要保证O(1)的size函数的时间
-
-    /**
-     * 这里初始化有个技巧
-     * 为了避免就是头插或者头删等操作的时候，因为头插如果插入的是第一个元素就要移动last指针
-     * 这里我们可以设置两个虚拟节点，就可以避免这个问题，所以Y总双链表那题就是这么个思路
-     * 这样的话，我们就用双链表模拟就好了，不用循环了
-     */
-
-    //双链表模拟,不循环
-    public LinkedListDeque() {
-        size = 0; //一开始没有元素
-        first = new IntNode(null, null, null);
-        last = new IntNode(null, null, null);
-        first.next = last;
-        last.pre = first;
-    }
-
-    /**
-     * 规则
-     * 1. add和remove不可以用looping或者recursion
-     * 2. get函数必须要用迭代，即looping
-     * 3. size函数必须要O(1)时间，即不可以用looping或者recursion，所以要用变量size
-     */
-
-    /**
-     * 本类要求写一个用双链表而且是循环的模拟双端队列
-     */
-
-    //输出双端队列
-    public void printDeque() {
-        IntNode intNode = first.next;
-        while (intNode != last) {
-            System.out.println(intNode.item);
-            System.out.println(" ");
-            intNode = intNode.next;
+        public Node() {
+            this.next = null;
+            this.prev = null;
         }
-        System.out.println('\n');
     }
 
-    //判断大小
-    public int size() {
-        return this.size;
+    private Node<T> sentinel;
+    private int totalSize;
+
+    public LinkedListDeque() {
+        sentinel = new Node<T>();
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
+        totalSize = 0;
     }
 
-    //判空
+    public void addLast(T item) {
+        sentinel.prev.next = new Node<T>(item, sentinel.prev, sentinel);
+        sentinel.prev = sentinel.prev.next;
+        this.totalSize++;
+    }
+
+    public void addFirst(T item) {
+        Node<T> first = new Node<T>(item, sentinel, sentinel.next);
+        sentinel.next = first;
+        first.next.prev = first;
+        this.totalSize++;
+    }
+
     public boolean isEmpty() {
-        if (size == 0) {
+        if (this.totalSize == 0) {
             return true;
         }
         return false;
     }
 
-    //头插
-    public void addFirst(T item) {
-        //方便多了，对吧，只需要修改一下first和last，不需要考虑任何特殊情况
-        IntNode intNode = new IntNode(item, first, first.next);
-        intNode.next.pre = intNode;
-        first.next = intNode;
-        size++;
+    public int size() {
+        return totalSize;
     }
 
-    //尾插
-    public void addLast(T item) {
-        IntNode intNode = new IntNode(item, last.pre, last);
-        last.pre = intNode;
-        last.pre.next = intNode;
-        size++;
+    public void printDeque() {
+        if (totalSize == 0) {
+            System.out.println("empty deque!");
+            return;
+        }
+        Node<T> p = sentinel.next;
+        System.out.print(p.item);
+        while (p.next != sentinel) {
+            p = p.next;
+            System.out.print(" " + p.item);
+        }
+        System.out.print("\n");
     }
 
-    //头删
     public T removeFirst() {
-        if (isEmpty()) {
+        if (totalSize == 0) {
             return null;
         }
-        T number = first.next.item;
-        first.next = first.next.next;
-        first.next.pre = first;
-        size--;
-        return number;
+        totalSize--;
+        T item = sentinel.next.item;
+        sentinel.next = sentinel.next.next;
+        sentinel.next.prev = sentinel;
+        return item;
     }
 
-    //尾删
     public T removeLast() {
-        if (isEmpty()) {
+        if (totalSize == 0) {
             return null;
         }
-        T number = last.pre.item;
-        last.pre = last.pre.pre;
-        last.pre.next = last;
-        size--;
-        return number;
+        totalSize--;
+        T item = sentinel.prev.item;
+        sentinel.prev.prev.next = sentinel;
+        sentinel.prev = sentinel.prev.prev;
+        return item;
     }
 
-    //获取元素
     public T get(int index) {
-        if (index > size()) {
+        if (totalSize <= index) {
             return null;
         }
-        IntNode intNode = first.next;
-        int i = 0;
-        while (i < index) {
-            intNode = intNode.next;
-            i++;
+        Node<T> p = sentinel.next;
+        while ((index--) > 0) {
+            p = p.next;
         }
-        return intNode.item;
+        return p.item;
     }
 
-    //递归的辅助函数
-    public T getRecursionHelper(IntNode intNode, int index) {
+    private T getRecursiveHelper(int index, Node<T> p) {
         if (index == 0) {
-            return intNode.item;
-        } else {
-            return getRecursionHelper(intNode.next, index - 1);
+            return p.item;
         }
+        return getRecursiveHelper(index - 1, p.next);
     }
 
-    //递归获取元素,递归的辅助函数，用helper来写
-    public T getRecursion(int index) {
-        if (index > size()) {
+    public T getRecursive(int index) {
+        if (index >= totalSize || index < 0) {
             return null;
         }
-        IntNode intNode = first.next;
-        return getRecursionHelper(intNode, index);
+        return getRecursiveHelper(index, sentinel.next);
     }
-
 }
