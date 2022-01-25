@@ -126,6 +126,7 @@ public class LinkedListDeque<T> {
         return intNode.item;
     }
 
+    //递归的辅助函数
     public T getRecursionHelper(IntNode intNode, int index) {
         if (index == 0) {
             return intNode.item;
