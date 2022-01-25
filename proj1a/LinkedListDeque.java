@@ -3,10 +3,10 @@ public class LinkedListDeque<T> {
     /**
      * 创建一个节点类对象
      */
-    public class IntNode {
-        private T item;
-        private IntNode pre;
-        private IntNode next;
+    private class IntNode {
+        public T item;
+        public IntNode pre;
+        public IntNode next;
 
         public IntNode(T item, IntNode pre, IntNode next) {
             this.item = item;
@@ -16,9 +16,9 @@ public class LinkedListDeque<T> {
     }
 
     //管理模式用带size和first和last指针的
-    private IntNode first; //头指针
-    private IntNode last; //尾指针
-    private int size; //因为后面要保证O(1)的size函数的时间
+    public IntNode first; //头指针
+    public IntNode last; //尾指针
+    public int size; //因为后面要保证O(1)的size函数的时间
 
     /**
      * 这里初始化有个技巧
@@ -127,7 +127,7 @@ public class LinkedListDeque<T> {
     }
 
     //递归的辅助函数
-    public T getRecursiveHelper(IntNode intNode, int index) {
+    private T getRecursiveHelper(IntNode intNode, int index) {
         if (index == 0) {
             return intNode.item;
         } else {
