@@ -60,7 +60,7 @@ public class LinkedListDeque<T> {
 
     //判断大小
     public int size() {
-        return this.size;
+        return size;
     }
 
     //判空
@@ -114,7 +114,7 @@ public class LinkedListDeque<T> {
 
     //获取元素
     public T get(int index) {
-        if (index > size()) {
+        if (index >= size()) {
             return null;
         }
         IntNode intNode = first.next;
@@ -137,7 +137,7 @@ public class LinkedListDeque<T> {
 
     //递归获取元素,递归的辅助函数，用helper来写
     public T getRecursive(int index) {
-        if (index > size()) {
+        if (index >= size()) {
             return null;
         }
         IntNode intNode = first.next;
