@@ -80,25 +80,30 @@ public class ArrayDeque<T> {
         //nextFirst有可能指向最后一个位置,为了确保nextFirst在范围内
         //可以自己写一组数据来模拟一下
         //从nextFirst的右边开始
-        for (int i = (nextFirst + 1) % capacity; i != nextLast - 1; i = (i + 1) % capacity)
+        for (int i = (nextFirst + 1) % capacity; i != nextLast - 1; i = (i + 1) % capacity) {
             System.out.print(items[i] + " ");
+        }
+
         System.out.print(items[nextLast - 1]);
     }
 
     //头删操作
     public T removeFirst() {
         //当数组的内容为空的时候，才无法进行remove操作
-        if (size == 0) return null;
+        if (size == 0) {
+            return null;
+        }
         //否则是可以删除的
         //因为addFirst是往前插的,所以removeFirst就是往后删除
         //往后的动作会超出边界,为了不超出边界,就要%size
         //加上删除的是nextFirst右边的才是要删除的,所以就有下面那行代码了
         nextFirst = (nextFirst + 1) % capacity; //要删除的位置，往后移，就是防止超出范围了
-        T temp = items[nextFirst];//要删除的元素
-        items[nextFirst] = null;//删除的元素为null就表示删除了
+        T temp = items[nextFirst]; //要删除的元素
+        items[nextFirst] = null; //删除的元素为null就表示删除了
         size--;
-        if (capacity >= 16 && size < capacity / 4)
+        if (capacity >= 16 && size < capacity / 4) {
             resize(capacity / 2);
+        }
         return temp;
     }
 
@@ -107,20 +112,24 @@ public class ArrayDeque<T> {
     //往前的话，注意0的时候是转折点
     //往后的话，才要注意要保持在数组长度范围内，就要对数组长度取模
     public T removeLast() {
-        if (size == 0) return null;
+        if (size == 0) {
+            return null;
+        }
         nextLast = nextLast == 0 ? capacity - 1 : nextLast - 1;
         T temp = items[nextLast];
         items[nextLast] = null;
         size--;
-        if (capacity >= 16 && size < capacity / 4)
-            resize(capacity / 2);
+//        if (capacity >= 16 && size < capacity / 4) {
+//            resize(capacity / 2);
+//        }
         return temp;
     }
 
     //根据索引获取元素
     public T get(int index) {
-        if (index >= size)
+        if (index >= size) {
             return null;
+        }
         return items[(nextFirst + 1 + index) % capacity];
     }
 }
