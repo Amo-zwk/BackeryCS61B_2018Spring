@@ -26,15 +26,15 @@ public class ArrayDeque<T> {
     }
 
     //数组的扩容,resize是调整的意思,数组满了才需要扩容
-    private void resize(int capacity) {
-        T[] a = (T[]) new Object[capacity];
+    private void resize(int length) {
+        T[] a = (T[]) new Object[length];
         //从nextFirst的右边或者从nextLast的左边开始,遍历次数为size,就可以拷贝整个数组了
         for (int i = 1; i <= size; i++) {
             a[i] = items[(++nextFirst) % this.capacity]; //要保证在范围内
             //为什么从1开始因为后面为了给nextFirst = 0埋下伏笔
         }
         //扩容后的初始化
-        this.capacity = capacity;
+        this.capacity = length;
         //这么设置的话，下一次往前插和往后插都是非常方便的
         nextFirst = 0;
         nextLast = size + 1;
@@ -101,9 +101,6 @@ public class ArrayDeque<T> {
         T temp = items[nextFirst]; //要删除的元素
         items[nextFirst] = null; //删除的元素为null就表示删除了
         size--;
-        if (capacity >= 16 && size < capacity / 4) {
-            resize(capacity / 2);
-        }
         return temp;
     }
 
@@ -119,9 +116,6 @@ public class ArrayDeque<T> {
         T temp = items[nextLast];
         items[nextLast] = null;
         size--;
-//        if (capacity >= 16 && size < capacity / 4) {
-//            resize(capacity / 2);
-//        }
         return temp;
     }
 
