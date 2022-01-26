@@ -101,6 +101,9 @@ public class ArrayDeque<T> {
         T temp = items[nextFirst]; //要删除的元素
         items[nextFirst] = null; //删除的元素为null就表示删除了
         size--;
+        if (capacity >= 16 && size < capacity / 4) {
+            resize(capacity / 2);
+        }
         return temp;
     }
 
@@ -116,6 +119,9 @@ public class ArrayDeque<T> {
         T temp = items[nextLast];
         items[nextLast] = null;
         size--;
+        if (capacity >= 16 && size < capacity / 4) {
+            resize(capacity / 2);
+        }
         return temp;
     }
 
