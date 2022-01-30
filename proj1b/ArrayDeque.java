@@ -1,4 +1,4 @@
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
 
     /**
      * 要求
@@ -42,6 +42,8 @@ public class ArrayDeque<T> {
     }
 
     //头插
+    //重写接口方法
+    @Override
     public void addFirst(T item) {
         if (size == capacity) {
             resize(capacity * 2);
@@ -53,6 +55,7 @@ public class ArrayDeque<T> {
     }
 
     //尾插
+    @Override
     public void addLast(T item) {
         //满了要扩容
         if (size == capacity) {
@@ -65,16 +68,19 @@ public class ArrayDeque<T> {
         nextLast = (nextLast + 1) % capacity;
     }
 
+    @Override
     //判空
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     //数组长度
     public int size() {
         return size;
     }
 
+    @Override
     //输出数组
     public void printDeque() {
         //nextFirst有可能指向最后一个位置,为了确保nextFirst在范围内
@@ -87,6 +93,7 @@ public class ArrayDeque<T> {
         System.out.print(items[nextLast - 1]);
     }
 
+    @Override
     //头删操作
     public T removeFirst() {
         //当数组的内容为空的时候，才无法进行remove操作
@@ -108,6 +115,7 @@ public class ArrayDeque<T> {
         return temp;
     }
 
+    @Override
     //尾删也同理和头删同理
     //尾插是往后插，所以尾删要往前删
     //往前的话，注意0的时候是转折点
@@ -127,6 +135,7 @@ public class ArrayDeque<T> {
         return temp;
     }
 
+    @Override
     //根据索引获取元素
     public T get(int index) {
         if (index >= size) {
