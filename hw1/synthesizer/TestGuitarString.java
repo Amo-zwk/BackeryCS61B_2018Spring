@@ -14,8 +14,8 @@ import static org.junit.Assert.*;
 public class TestGuitarString {
     @Test
     public void testPluckTheAString() {
-        double CONCERT_A = 440.0;
-        GuitarString aString = new GuitarString(CONCERT_A);
+        double V = 440.0;
+        GuitarString aString = new GuitarString(V);
         aString.pluck();
         for (int i = 0; i < 50000; i += 1) {
             StdAudio.play(aString.sample());
@@ -59,3 +59,4 @@ public class TestGuitarString {
         jh61b.junit.textui.runClasses(TestGuitarString.class);
     }
 }
+

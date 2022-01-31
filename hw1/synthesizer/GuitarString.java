@@ -59,3 +59,4 @@ public class GuitarString {
         return buffer.peek();
     }
 }
+
