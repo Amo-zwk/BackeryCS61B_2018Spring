@@ -17,7 +17,7 @@ public class GuitarString {
         //       accuracy, use the Math.round() function before casting.
         //       Your buffer should be initially filled with zeros.
         int capacity = (int) Math.round(SR / frequency);
-        buffer = new ArrayRingBuffer<>(capacity);
+        buffer = new ArrayRingBuffer<>(capacity); //这个类有该构造方法
         for (int i = 0; i < capacity; i++) {
             buffer.enqueue(0.0);
         }
@@ -31,9 +31,11 @@ public class GuitarString {
         //       double r = Math.random() - 0.5;
         //
         //       Make sure that your random numbers are different from each other.
+        //队列不为空的时候，一直出队
         while (!buffer.isEmpty()) {
             buffer.dequeue();
         }
+        //队列不满的时候，一直入队
         while (!buffer.isFull()) {
             double r = Math.random() - 0.5;
             buffer.enqueue(r);
@@ -47,6 +49,7 @@ public class GuitarString {
         //       Dequeue the front sample and enqueue a new sample that is
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
+        //题目有图说明
         double r1 = buffer.dequeue();
         double r2 = buffer.peek();
         double update = DECAY * (r1 + r2) / 2;
