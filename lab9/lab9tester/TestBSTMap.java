@@ -65,6 +65,9 @@ public class TestBSTMap {
     }
 
     // assumes put works
+    /**
+     * 过了
+     */
     @Test
     public void sanitySizeTest() {
         BSTMap<String, Integer> b = new BSTMap<String, Integer>();
