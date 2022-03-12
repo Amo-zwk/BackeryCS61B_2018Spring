@@ -81,8 +81,14 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList q = A ;
+        //此时q走到最后一个位置了
+        while(q.rest != null){
+            q = q.rest ;
+        }
+        //插入B
+        q.rest = B ;
+        return A ;
     }
 
     /**
@@ -90,8 +96,24 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        //先递归走到尽头，然后回退
+        IntList q = new IntList(A.first,null) ;
+        IntList s = q ;
+        //对A操作
+        IntList p = A.rest ;
+        while(p != null){
+            s.rest = new IntList(p.first,null) ;
+            s = s.rest ;
+            p = p.rest ;
+        }
+        //对B操作
+        IntList i = B ;
+        while(i != null){
+            s.rest = new IntList(i.first,null) ;
+            s = s.rest ;
+            i = i.rest ;
+        }
+        return q ;
     }
 
 
