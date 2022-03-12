@@ -81,6 +81,9 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
+        if(A == null) {
+            return B ;
+        }
         IntList q = A ;
         //此时q走到最后一个位置了
         while(q.rest != null){
@@ -96,7 +99,9 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //先递归走到尽头，然后回退
+        if(A == null){
+            return B ; 
+        }
         IntList q = new IntList(A.first,null) ;
         IntList s = q ;
         //对A操作
