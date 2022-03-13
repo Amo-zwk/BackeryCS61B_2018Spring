@@ -7,7 +7,7 @@ public class Planet {
     public String imgFileName ; //与描述行星的图像相对应的文件名称
 
     //常数G
-    public static final double G = 6.67e-11;
+    private static final double G = 6.67e-11;
 
     //构造器第一种
     public Planet(double xxPos, double yyPos, double xxVel, double yyVel, double mass, String imgFileName) {
