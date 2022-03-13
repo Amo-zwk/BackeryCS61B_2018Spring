@@ -35,36 +35,40 @@ public class NBody {
         double r = readRadius(filename);
         Planet[] planets = readPlanets(filename);
 
-        // set the universe scale
+        //
         StdDraw.setXscale(-r, r);
         StdDraw.setYscale(-r, r);
         StdDraw.enableDoubleBuffering();
 
         double t = 0;
         int num = planets.length;
-        while (t <= T) {
+        while (t <= T) { //这是题目给的
             double[] xForces = new double[num];
             double[] yForces = new double[num];
+            //每个行星的合力存起来
             for (int i = 0; i < num; i++) {
                 xForces[i] = planets[i].calcNetForceExertedByX(planets);
                 yForces[i] = planets[i].calcNetForceExertedByY(planets);
             }
+            //更新每个行星
             for (int i = 0; i < num; i++) {
                 planets[i].update(dt, xForces[i], yForces[i]);
             }
 
+            //画背景图
             StdDraw.picture(0, 0, "images/starfield.jpg");
 
-            // draw all the planets
+            //画所有行星
             for (Planet planet : planets) {
                 planet.draw();
             }
-
+            //先show然后暂停10然后t+=dt
             StdDraw.show();
             StdDraw.pause(10);
             t += dt;
         }
 
+        //结束的时候打印
         StdOut.printf("%d\n", planets.length);
         StdOut.printf("%.2e\n", r);
         for (int i = 0; i < planets.length; i++) {
