@@ -9,7 +9,7 @@ public class ArrayDeque<T> {
      * 强烈建议你将数组视为循环数组
      */
 
-    //本题是用数组模拟的双端队列，用的是循环数组
+    //本题是用数组模拟的双端队列，用的是循环数组模拟双端队列
 
     private T[] items; //数组元素
     private int size; //数组大小
