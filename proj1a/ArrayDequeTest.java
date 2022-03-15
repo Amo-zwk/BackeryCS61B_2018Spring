@@ -22,5 +22,4 @@ public class ArrayDequeTest {
         dq.addFirst("second");
         assertEquals(1,dq.size());
     }
-    //
 }

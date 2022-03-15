@@ -161,6 +161,4 @@ public class ArrayDeque<T> {
         //是以nextFirst+1为下标为0的第一个元素开始
         return items[(nextFirst + 1 + index) % capacity];
     }
-
-    //
 }
