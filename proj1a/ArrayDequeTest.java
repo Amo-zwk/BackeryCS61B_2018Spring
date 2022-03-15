@@ -4,6 +4,8 @@ import org.junit.Test;
 
 public class ArrayDequeTest {
 
+    //自行写测试
+
     //判空的测试
     @Test
     public void empty() {
