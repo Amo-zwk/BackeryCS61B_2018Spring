@@ -206,7 +206,5 @@ public class LinkedListDeque<T> {
         }
         System.out.println('\n');
     }
-
-    //
 }
 
