@@ -37,6 +37,7 @@ public class LinkedListDeque<T> {
     }
 
     //管理模式用带size和first和last指针的
+    //
     private IntNode first; //头指针
     private IntNode last; //尾指针
     private int size; //因为后面要保证O(1)的size函数的时间

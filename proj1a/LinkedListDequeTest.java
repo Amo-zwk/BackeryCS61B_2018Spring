@@ -94,5 +94,7 @@ public class LinkedListDequeTest {
         addIsEmptySizeGetTest();
         addRemoveTest();
     }
+    
+    //
 }
 
