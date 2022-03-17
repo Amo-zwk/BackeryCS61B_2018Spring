@@ -23,20 +23,32 @@ public class TestPalindrome {
         assertEquals("persiflage", actual);
     }
 
-    //判定回文的测试方法
-    @Test
-    public void testIsPalindrome() {
-        assertTrue(palindrome.isPalindrome("madam"));
-    }
-
-    //判定回文的测试方法
     @Test
     public void testIsPalindromeCc() {
-        //接口传入的是接口对象或者接口的实现类
+
         OffByOne obo = new OffByOne();
         assertTrue(palindrome.isPalindrome("", obo));
     }
 
+    //判定回文的测试方法
+    @Test
+    public void testIsPalindrome() {
+        assertTrue(palindrome.isPalindrome(""));
+        assertTrue(palindrome.isPalindrome("a"));
+        assertTrue(palindrome.isPalindrome("aba"));
+        assertTrue(palindrome.isPalindrome("aaccbbbccaa"));
+        assertFalse(palindrome.isPalindrome("ab"));
+        assertFalse(palindrome.isPalindrome("ababba"));
+    }
+
+    //判定回文的测试方法
+    @Test
+    public void testIsOffByOnePalindrome() {
+        //接口传入的是接口对象或者接口的实现类
+        CharacterComparator cc = new OffByOne();
+        assertTrue(palindrome.isPalindrome("flake", cc));
+        assertFalse(palindrome.isPalindrome("aba", cc));
+    }
 }
 
 
