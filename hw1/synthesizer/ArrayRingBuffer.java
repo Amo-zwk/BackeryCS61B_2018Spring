@@ -20,7 +20,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         first = 0;
         last = 0;
         this.fillCount = 0;
-        rb = (T[]) new Object[capacity]; //向下转型，初始化泛型数组
+        rb = (T[]) new Object[capacity];
     }
 
     /**
@@ -28,6 +28,15 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * throw new RuntimeException("Ring buffer overflow"). Exceptions
      * covered Monday.
      */
+
+    /**
+     * In the last section of this homework, we’ll implement
+     * our ArrayRingBuffer
+     * to throw a run-time exception if the client attempts
+     * to enqueue() into a full buffer or call dequeue() or peek()
+     * on an empty buffer
+     */
+
     //入队操作
     public void enqueue(T x) {
         //如果队列为空
@@ -47,12 +56,15 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * covered Monday.
      */
     //出队操作
+    //模拟队列,是队尾进,队头出
+    //last表示的是队尾,first表示的是队头
+    //队头出就是往前走
     public T dequeue() {
         //队列为空
         if (isEmpty()) {
             throw new RuntimeException("Ring buffer underflow");
         } else {
-            //出队，直接让first往上走
+            //出队，直接让first往前走
             T temp = rb[first];
             first = (first + 1) % capacity;
             fillCount = fillCount - 1;

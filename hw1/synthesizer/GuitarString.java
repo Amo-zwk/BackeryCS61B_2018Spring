@@ -10,6 +10,10 @@ public class GuitarString {
     /* Buffer for storing sound data. */
     private BoundedQueue<Double> buffer;
 
+    /**
+     * 按照提示来就好了
+     */
+
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
         //       Create a buffer with capacity = SR / frequency. You'll need to
@@ -23,6 +27,9 @@ public class GuitarString {
         }
     }
 
+    /**
+     * 按照提示来就好了
+     */
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
@@ -42,6 +49,9 @@ public class GuitarString {
         }
     }
 
+    /**
+     * 按照提示来就好了
+     */
     /* Advance the simulation one time step by performing one iteration of
      * the Karplus-Strong algorithm.
      */
