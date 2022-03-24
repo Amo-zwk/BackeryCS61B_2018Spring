@@ -45,12 +45,13 @@ public class RandomWorldDemo {
     }
 
     public static void main(String[] args) {
+        //初始化渲染引擎
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
-
+        //初始化是个二维数组贴纸
         TETile[][] randomTiles = new TETile[WIDTH][HEIGHT];
         fillWithRandomTiles(randomTiles);
-
+        //显示贴纸
         ter.renderFrame(randomTiles);
     }
 

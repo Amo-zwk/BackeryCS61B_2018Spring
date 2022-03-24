@@ -21,7 +21,7 @@ public class TestBSTMap {
             fail();
         }
     }
-
+    //
     //assumes put/size/containsKey/get work
     @Test
     public void sanityClearTest() {

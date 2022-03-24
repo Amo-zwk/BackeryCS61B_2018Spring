@@ -39,6 +39,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      *  computing the hashcode, followed by modding by the number of buckets.
      *  To handle negative numbers properly, uses floorMod instead of %.
      */
+    //
     private int hash(K key) {
         if (key == null) {
             return 0;
