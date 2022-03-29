@@ -32,4 +32,4 @@ public class HashTableDrawingUtility {
             StdDraw.text(X_OFFSET * scalingFactor, yCoord, i + ": ");
         }
     }
-} 
+}

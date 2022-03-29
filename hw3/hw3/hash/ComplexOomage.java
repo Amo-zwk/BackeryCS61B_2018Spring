@@ -30,7 +30,7 @@ public class ComplexOomage implements Oomage {
 
     public ComplexOomage(List<Integer> params) {
         if (params == null) {
-            throw new IllegalArgumentException("params must not be null!");            
+            throw new IllegalArgumentException("params must not be null!");
         }
 
         for (Integer x : params) {
