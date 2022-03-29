@@ -21,6 +21,18 @@ public class TestNiceSpreadOomage {
             return val;
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            NiceSpreadOomage that = (NiceSpreadOomage) o;
+            return val == that.val;
+        }
+
         public static NiceSpreadOomage randomNiceSpreadOomage() {
             NiceSpreadOomage x = new NiceSpreadOomage();
             x.val = StdRandom.uniform(0, 1000000);
@@ -43,3 +55,4 @@ public class TestNiceSpreadOomage {
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 10));
     }
 }
+

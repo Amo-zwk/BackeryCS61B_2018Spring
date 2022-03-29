@@ -21,6 +21,19 @@ public class TestJankyOomage {
             return val;
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            JankyOomage that = (JankyOomage) o;
+            return val == that.val;
+        }
+
+
         public static JankyOomage randomJankyOomage() {
             JankyOomage x = new JankyOomage();
             x.val = StdRandom.uniform(0, 2);
@@ -43,3 +56,4 @@ public class TestJankyOomage {
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 10));
     }
 }
+
