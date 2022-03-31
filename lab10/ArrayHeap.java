@@ -7,16 +7,18 @@ import static org.junit.Assert.*;
  * (represented by type T), along with a priority value. Why do it this way? It
  * will be useful later on in the class...
  */
-public class ArrayHeap<T> implements ExtrinsicPQ<T> {
-    private Node[] contents;
-    private int size;
 
+public class ArrayHeap<T> implements ExtrinsicPQ<T> {
+    private Node[] contents; //应该类似于Key[] keys
+    private int size; //堆的长度
+
+    //初始化
     public ArrayHeap() {
-        contents = new ArrayHeap.Node[16];
+        contents = new ArrayHeap.Node[16]; // index从0到15
 
         /* Add a dummy item at the front of the ArrayHeap so that the getLeft,
          * getRight, and parent methods are nicer. */
-        contents[0] = null;
+        contents[0] = null; //根节点不需要设置
 
         /* Even though there is an empty spot at the front, we still consider
          * the size to be 0 since nothing has been inserted yet. */
@@ -28,7 +30,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int leftIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return i * 2; // return the left child index (i*2)
     }
 
     /**
@@ -36,7 +38,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int rightIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return i * 2 + 1; // return the right child index (i*2+1)
     }
 
     /**
@@ -44,7 +46,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int parentIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return i / 2; // return the parent index (i/2)
     }
 
     /**
@@ -80,11 +82,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         contents[index2] = node1;
     }
 
-
     /**
      * Returns the index of the node with smaller priority. Precondition: not
      * both nodes are null.
      */
+
     private int min(int index1, int index2) {
         Node node1 = getNode(index1);
         Node node2 = getNode(index2);
@@ -100,26 +102,27 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     }
 
 
-    /**
-     * Bubbles up the node currently at the given index.
-     */
+    // 堆的上浮
     private void swim(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-
-        /** TODO: Your code here. */
-        return;
+        if (index > 1 && contents[index].myPriority < contents[index / 2].myPriority) { //因为等于1就不能上浮了
+            swap(index, index / 2); //交换两个节点
+            swim(index / 2); //对新的父节点再进行swim判断
+        }
     }
 
-    /**
-     * Bubbles down the node currently at the given index.
-     */
+    //堆的下沉
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-
-        /** TODO: Your code here. */
-        return;
+        if(index * 2 <= size) // 如果有左孩,这是大前提,有左孩子必然有右孩子
+        {
+            int j = index * 2; //j表示左孩子
+            if ( j + 1 <= size && contents[j+1].myPriority < contents[j].myPriority) j++;//如果有右孩子
+            if (contents[j].myPriority>=contents[index].myPriority) return;
+            sink(j);
+        }
     }
 
     /**
@@ -134,6 +137,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
 
         /* TODO: Your code here! */
+        contents[++size] = new Node(item,priority);
+        size++;
+        if (size >= 2) swim(size);
     }
 
     /**
@@ -142,8 +148,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public T peek() {
-        /* TODO: Your code here! */
-        return null;
+        return contents[1].item();
     }
 
     /**
@@ -157,8 +162,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public T removeMin() {
-        /* TODO: Your code here! */
-        return null;
+        T min = contents[1].myItem; //第一个元素
+        swap(1,size); //交换第一个和最后一个节点
+        size--; //相当于把最后一个给删掉了
+        sink(1); //第一个元素开始下沉
+        return min;
     }
 
     /**
@@ -180,8 +188,15 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public void changePriority(T item, double priority) {
-        /* TODO: Your code here! */
-        return;
+        for (int i=1;i<=size;i++){
+            if (contents[i].myItem.equals(item)){
+                double temp=contents[i].myPriority;
+                contents[i].myPriority=priority;
+                if (temp>priority) swim(i); //最小堆
+                else sink(i);
+                return;
+            }
+        }
     }
 
     /**
@@ -228,6 +243,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             throw new IllegalArgumentException("Cannot sink or swim a null node.");
         }
     }
+
+    /**
+     * Node定义的地方
+     */
 
     private class Node {
         private T myItem;
