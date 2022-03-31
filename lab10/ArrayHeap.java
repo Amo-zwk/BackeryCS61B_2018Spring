@@ -1,4 +1,5 @@
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -29,7 +30,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      * Returns the index of the node to the left of the node at i.
      */
     private static int leftIndex(int i) {
-        /* TODO: Your code here! */
         return i * 2; // return the left child index (i*2)
     }
 
@@ -37,7 +37,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      * Returns the index of the node to the right of the node at i.
      */
     private static int rightIndex(int i) {
-        /* TODO: Your code here! */
         return i * 2 + 1; // return the right child index (i*2+1)
     }
 
@@ -45,7 +44,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      * Returns the index of the node that is the parent of the node at i.
      */
     private static int parentIndex(int i) {
-        /* TODO: Your code here! */
         return i / 2; // return the parent index (i/2)
     }
 
@@ -106,7 +104,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void swim(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-        if (index > 1 && contents[index].myPriority < contents[index / 2].myPriority) { //因为等于1就不能上浮了
+        if (index > 1 && contents[index].myPriority < contents[index / 2].myPriority) {
+            //因为等于1就不能上浮了
             swap(index, index / 2); //交换两个节点
             swim(index / 2); //对新的父节点再进行swim判断
         }
@@ -116,11 +115,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-        if(index * 2 <= size) // 如果有左孩,这是大前提,有左孩子必然有右孩子
-        {
+        while (index * 2 <= size) { // 如果有左孩,这是大前提,有左孩子必然有右孩子
             int j = index * 2; //j表示左孩子
-            if ( j + 1 <= size && contents[j+1].myPriority < contents[j].myPriority) j++;//如果有右孩子
-            if (contents[j].myPriority>=contents[index].myPriority) return;
+            if (j + 1 <= size && contents[j + 1].myPriority < contents[j].myPriority) {
+                j++;//如果有右孩子
+            }
+            if (contents[j].myPriority >= contents[index].myPriority) break;
+            swap(index,j);
             sink(j);
         }
     }
@@ -136,8 +137,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             resize(contents.length * 2);
         }
 
-        /* TODO: Your code here! */
-        contents[++size] = new Node(item,priority);
+        contents[size+1] = new Node(item, priority);
         size++;
         if (size >= 2) swim(size);
     }
@@ -163,7 +163,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T removeMin() {
         T min = contents[1].myItem; //第一个元素
-        swap(1,size); //交换第一个和最后一个节点
+        swap(1, size); //交换第一个和最后一个节点
         size--; //相当于把最后一个给删掉了
         sink(1); //第一个元素开始下沉
         return min;
@@ -188,11 +188,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public void changePriority(T item, double priority) {
-        for (int i=1;i<=size;i++){
-            if (contents[i].myItem.equals(item)){
-                double temp=contents[i].myPriority;
-                contents[i].myPriority=priority;
-                if (temp>priority) swim(i); //最小堆
+        for (int i = 1; i <= size; i++) {
+            if (contents[i].myItem.equals(item)) {
+                double temp = contents[i].myPriority;
+                contents[i].myPriority = priority;
+                if (temp > priority) swim(i); //最小堆
                 else sink(i);
                 return;
             }
@@ -257,7 +257,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             myPriority = priority;
         }
 
-        public T item(){
+        public T item() {
             return myItem;
         }
 
@@ -272,7 +272,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     }
 
 
-    /** Helper function to resize the backing array when necessary. */
+    /**
+     * Helper function to resize the backing array when necessary.
+     */
     private void resize(int capacity) {
         Node[] temp = new ArrayHeap.Node[capacity];
         for (int i = 1; i < this.contents.length; i++) {
