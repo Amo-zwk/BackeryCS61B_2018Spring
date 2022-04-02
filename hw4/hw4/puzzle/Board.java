@@ -128,17 +128,25 @@ public class Board implements WorldState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object y) {
+        if (y == this) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (y == null || y.getClass() != this.getClass()) {
             return false;
         }
-        Board board = (Board) o;
-        return N == board.N
-                && Arrays.equals(start, board.start)
-                && Arrays.equals(goal, board.goal);
+        Board a = (Board) y;
+        if (a.size() != this.size()) {
+            return false;
+        }
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (a.tileAt(i, j) != this.tileAt(i, j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override

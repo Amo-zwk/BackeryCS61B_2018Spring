@@ -50,7 +50,7 @@ public class Solver {
     private ArrayList<WorldState> arrayList; //最终答案的路径
 
     //第一步是创建一个SearchNode的priority queue
-    MinPQ<Node> priorityQueue = new MinPQ<Node>();
+    private MinPQ<Node> priorityQueue = new MinPQ<Node>();
 
     private void getAnswer(Node goal) {
         walks = goal.moves; //最终步数就是goal.moves
