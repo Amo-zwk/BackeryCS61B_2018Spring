@@ -8,7 +8,7 @@ public class Solver {
 
     //SearchNode类
     //每个SearchNode代表一个“移动序列”
-    public class Node implements Comparable<Node> {
+    private class Node implements Comparable<Node> {
 
         private int priority; //优先级
         private WorldState worldState; //WorldState对象
@@ -32,7 +32,7 @@ public class Solver {
         }
 
         //构造方法
-        public Node(WorldState w, int moves, Node previous) {
+        Node(WorldState w, int moves, Node previous) {
             this.worldState = w;
             this.moves = moves;
             this.previous = previous;
