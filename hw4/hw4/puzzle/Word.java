@@ -10,9 +10,11 @@ public class Word implements WorldState {
     private static final String WORDFILE = "input/words10000.txt";
     private final String word;
     private final String goal;
+    private int estimatedDist;
 
     /**
      * Reads the wordfile specified by the wordfile variable.
+     * 读取wordfile变量指定的wordfile
      */
     private void readWords() {
         words = new HashSet<String>();
@@ -25,8 +27,11 @@ public class Word implements WorldState {
 
     /**
      * Creates a new Word.
+     * 创建一个新的单词a,b并且a和b分别赋值给word和goal
+     * Word的构造函数
      */
     public Word(String w, String g) {
+        estimatedDist = -1;
         /* If words hasn't been read yet, read it. */
         if (words == null) {
             readWords();
@@ -39,14 +44,16 @@ public class Word implements WorldState {
         if (!words.contains(g)) {
             throw new IllegalArgumentException("Invalid goal: " + g);
         }
-
+        //word是初始单词
         word = w;
+        //goal是目标单词
         goal = g;
     }
 
     /**
-     * Computes the edit distance between a and b. From
-     * https://rosettacode.org/wiki/Levenshtein_distance.
+     * Computes the edit distance between a and b.
+     * 计算a和b之间的编辑距离
+     * From https://rosettacode.org/wiki/Levenshtein_distance.
      */
     private static int editDistance(String a, String b) {
         a = a.toLowerCase();
@@ -62,7 +69,7 @@ public class Word implements WorldState {
             int nw = i - 1;
             for (int j = 1; j <= b.length(); j++) {
                 int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]),
-                         a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+                        a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
                 nw = costs[j];
                 costs[j] = cj;
             }
@@ -70,7 +77,10 @@ public class Word implements WorldState {
         return costs[b.length()];
     }
 
-
+    /**
+     * 计算它的neighbor通过上面的编辑距离editDistance函数
+     * 返回一个word的可迭代的neighbors的迭代器,它是一个WorldState类型
+     */
     @Override
     public Iterable<WorldState> neighbors() {
         Set<WorldState> neighbs = new HashSet<>();
@@ -82,9 +92,16 @@ public class Word implements WorldState {
         return neighbs;
     }
 
+    /**
+     * 估计该word到goal目标的距离
+     * 估计该word到目标的距离必须小于或等于实际(且未知)距离
+     */
     @Override
     public int estimatedDistanceToGoal() {
-        return editDistance(this.word, goal);
+        if (estimatedDist == -1) { //说明没有被赋值过
+            estimatedDist = editDistance(this.word, goal);
+        }
+        return estimatedDist;
     }
 
     @Override
