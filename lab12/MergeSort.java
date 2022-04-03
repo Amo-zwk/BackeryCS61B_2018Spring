@@ -35,7 +35,13 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
-        return null;
+        Queue<Queue<Item>> queueQueue = new Queue<>();
+        for (Item item : items) {
+            Queue<Item> q = new Queue<>();
+            q.enqueue(item);
+            queueQueue.enqueue(q);
+        }
+        return queueQueue;
     }
 
     /**
@@ -53,14 +59,50 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
-        // Your code here!
-        return null;
+        Queue<Item> queue = new Queue<>();
+        while (!(q1.isEmpty() && q2.isEmpty())) {
+            queue.enqueue(getMin(q1, q2));
+        }
+        while (!q1.isEmpty()) {
+            queue.enqueue(q1.dequeue());
+        }
+        while (!q2.isEmpty()) {
+            queue.enqueue(q2.dequeue());
+        }
+        return queue;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        if (items.size() <= 1) {
+            return items;
+        }
+        Queue<Queue<Item>> tmp = makeSingleItemQueues(items); //先分
+        //比如 tmp 为 Alice Vanessa Ethan 此时的size为3
+        while (tmp.size() != 1) {
+            Queue<Queue<Item>> tmpp = new Queue<>();
+            while (!tmp.isEmpty()) { //若tmp不为空
+                Queue<Item> q1 = tmp.dequeue(); //先出队Alice
+                Queue<Item> q2 = tmp.isEmpty() ? new Queue<>() : tmp.dequeue();
+                //如果tmp为空那么就new Queue<>(),否则就出队Vanessa
+                tmpp.enqueue(mergeSortedQueues(q1, q2)); //合并子问题
+            }
+            tmp = tmpp;
+        }
+        return tmp.dequeue();
+    }
+
+    public static void main(String[] args) {
+        Queue<String> q = new Queue<>();
+        q.enqueue("Cat");
+        q.enqueue("Pig");
+        q.enqueue("Ant");
+        q.enqueue("Hello");
+        q.enqueue("Orange");
+        Queue<String> sortedQueue = MergeSort.mergeSort(q);
+        System.out.println(q);
+        System.out.println(sortedQueue);
     }
 }
